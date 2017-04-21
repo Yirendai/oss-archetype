@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+#set( $whySetVelocityVariablesLikeThis = 'see: http://stackoverflow.com/questions/31201338/maven-archetype-velocity-error-because-of-a-colon')
+#set( $userHome = '${sys:user.home}' )
+#set( $loggingFileFromEnv = '${env:LOGGING_FILE}' )
+#set( $loggingFile = '${loggingFileFromEnv:-${defaultLoggingFile}}' )
+#set( $loggingPathFromEnv = '${env:LOGGING_PATH}' )
+#set( $loggingPath = '${loggingPathFromEnv:-${defaultLoggingPath}}' )
+#set( $date_yyyyMM = '$${date:yyyy-MM}' )
+#set( $levelWithDefault = '${env:LOGGING_LEVEL_:-DEBUG}' )
+#set( $dollar = "$" )
+-->
+<Configuration status="WARN">
+    <Properties>
+        <Property name="defaultLoggingFile">${artifactId}</Property>
+        <Property name="defaultLoggingPath">$userHome/data/${artifactId}/logs</Property>
+        <!-- https://issues.apache.org/jira/browse/LOG4J2-1589 -->
+        <!-- http://logback.qos.ch/manual/configuration.html#nestedSubst -->
+        <Property name="loggingFileFromEnv">$loggingFileFromEnv</Property>
+        <Property name="loggingFile">$loggingFile</Property>
+        <Property name="loggingPathFromEnv">$loggingPathFromEnv</Property>
+        <Property name="loggingPath">$loggingPath</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout charset="UTF-8" >
+                <pattern>%d{ISO8601}{GMT+8} %highlight{%p} %style{%c{1.} [%t] %m}{bold,green}%n</pattern>
+            </PatternLayout>
+        </Console>
+        <RollingRandomAccessFile
+                name="RollingRandomAccessFile"
+                fileName="${dollar}{loggingPath}/${dollar}{loggingFile}.log"
+                filePattern="${dollar}{loggingPath}/$date_yyyyMM/${dollar}{loggingFile}-%d{yyyy-MM-dd}-%i.log"
+                immediateFlush="false" append="true" bufferSize="524288"
+        >
+            <PatternLayout charset="UTF-8" >
+                <Pattern>%d{ISO8601}{GMT+8} %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="512 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${dollar}{loggingPath}" maxDepth="2">
+                    <IfFileName glob="*/${dollar}{loggingFile}-*.log">
+                        <IfLastModified age="1d">
+                            <IfAny>
+                                <IfAccumulatedFileSize exceeds="2 GB"/>
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <!-- level="$levelWithDefault" will override spring-boot's logging.level.${dollar}{loggerName}: ${dollar}{logLevel} -->
+    <Loggers>
+        <Root includeLocation="false">
+            <AppenderRef ref="RollingRandomAccessFile"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>

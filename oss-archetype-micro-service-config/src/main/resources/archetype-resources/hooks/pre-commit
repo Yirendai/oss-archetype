@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "pre-commit"
+#java -jar hooks/oss-configlint.jar application.yml
+mvn clean package

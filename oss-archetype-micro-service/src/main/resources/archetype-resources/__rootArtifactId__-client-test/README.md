@@ -1,0 +1,2 @@
+
+# ${rootArtifactId}-client-test

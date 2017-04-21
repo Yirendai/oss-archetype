@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+#set( $whySetVelocityVariablesLikeThis = 'see: http://stackoverflow.com/questions/31201338/maven-archetype-velocity-error-because-of-a-colon')
+#set( $levelWithDefault = '${env:LOGGING_LEVEL_:-INFO}' )
+-->
+<Configuration status="WARN">
+    <Properties>
+    </Properties>
+
+    <Appenders>
+        <Console name="STDOUT">
+            <MarkerFilter marker="TRACE" onMatch="DENY" onMismatch="ACCEPT"/>
+            <PatternLayout charset="UTF-8" >
+                <pattern>%d{ISO8601}{GMT+8} %highlight{%p} %style{%c{1.} [%t] %m}{bold,green}%n</pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="$levelWithDefault" includeLocation="false">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>

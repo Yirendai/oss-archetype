@@ -1,0 +1,8 @@
+stages:
+- analysis
+
+on_every_push:
+  stage: analysis
+  script:
+  - echo "on_every_push"
+  - bash ci.sh analysis

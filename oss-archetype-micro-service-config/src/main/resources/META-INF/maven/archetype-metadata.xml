@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor
+        name="oss-archetype-micro-service-config"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+        xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <fileSets>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>hooks</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>application.yml</include>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>.editorconfig</include>
+                <include>.gitconfig</include>
+                <include>.gitignore</include>
+                <include>.gitlab-ci.yml</include>
+                <include>ci.sh</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</archetype-descriptor>

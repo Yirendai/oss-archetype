@@ -1,0 +1,16 @@
+<project>
+
+    <body>
+        <menu ref="parent" />
+        <menu name="DOCUMENTATION">
+            <item href="README.html" name="README" />
+        </menu>
+        <menu ref="modules" />
+        <menu name="JaCoCo">
+            <item name="JaCoCo UT" href="jacoco/index.html"/>
+            <item name="JaCoCo IT" href="jacoco-it/index.html"/>
+            <item name="JaCoCo Combined" href="jacoco-combined/index.html"/>
+        </menu>
+        <menu ref="reports" inherit="bottom" />
+    </body>
+</project>

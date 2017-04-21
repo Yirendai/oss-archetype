@@ -1,0 +1,16 @@
+
+# ${artifactId}
+
+#set( $whySetVelocityVariablesLikeThis = 'see: http://stackoverflow.com/questions/31201338/maven-archetype-velocity-error-because-of-a-colon')
+#set( $serverPortWithDefault = '${SERVER_PORT:8080}' )
+
+server:
+  port: $serverPortWithDefault
+
+---
+spring:
+  profiles: development.env
+
+---
+spring:
+  profiles: production.env

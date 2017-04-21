@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor
+        name="micro-service"
+        xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd">
+    <fileSets>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>hooks</directory>
+            <includes>
+                <include>commit-msg</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>src/readme</directory>
+            <includes>
+                <include>.gitkeep</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>src/site</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>README.md</include>
+                <include>.gitlab-ci.yml</include>
+                <include>ci.sh</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>.editorconfig</include>
+                <include>.gitconfig</include>
+                <include>.gitignore</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <modules>
+        <module id="${rootArtifactId}-client"
+                dir="__rootArtifactId__-client" name="${rootArtifactId}-client">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.properties</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" packaged="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.json</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/site</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/readme</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory></directory>
+                    <includes>
+                        <include>README.md</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+        <module id="${rootArtifactId}-client-test"
+                dir="__rootArtifactId__-client-test" name="${rootArtifactId}-client-test">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.properties</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" packaged="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.json</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/site</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/readme</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory></directory>
+                    <includes>
+                        <include>README.md</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+        <module id="${rootArtifactId}-service"
+                dir="__rootArtifactId__-service" name="${rootArtifactId}-service">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.properties</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                        <include>**/Dockerfile</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" packaged="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.json</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/site</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/readme</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory></directory>
+                    <includes>
+                        <include>docker-compose.yml</include>
+                        <include>README.md</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/main/asciidoc</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/docker</directory>
+                    <includes>
+                        <include>Dockerfile</include>
+                        <include>**/*.sh</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+        <module id="${rootArtifactId}-service-test"
+                dir="__rootArtifactId__-service-test" name="${rootArtifactId}-service-test">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.properties</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" packaged="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.json</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/site</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/readme</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory></directory>
+                    <includes>
+                        <include>README.md</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/main/asciidoc</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/docker</directory>
+                    <includes>
+                        <include>Dockerfile</include>
+                        <include>**/*.sh</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+    </modules>
+</archetype-descriptor>

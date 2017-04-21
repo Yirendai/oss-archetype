@@ -1,0 +1,44 @@
+stages:
+- analysis
+- test_and_build
+- deploy
+
+sonar:
+  stage: analysis
+  script:
+  - echo "on_analysis"
+  - bash ci.sh analysis
+
+on_every_push:
+  stage: test_and_build
+  script:
+  - echo "on_every_push"
+  - bash ci.sh test_and_build
+
+on_develop_push:
+  stage: deploy
+  script:
+  - echo "on_develop_push"
+  - bash ci.sh publish_snapshot
+  only:
+  - develop
+
+on_master_push:
+  stage: deploy
+  script:
+  - echo "on_master_push"
+  - bash ci.sh publish_release
+  only:
+  - master
+  artifacts:
+    paths:
+    - **/target/*.jar
+    - **/target/*.war
+
+on_release_tag:
+  stage: deploy
+  script:
+  - echo "on_release_tag"
+  - bash ci.sh publish_release_tag
+  only:
+  - /^release.+$/

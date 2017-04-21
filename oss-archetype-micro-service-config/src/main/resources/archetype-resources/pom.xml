@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <name>${artifactId}</name>
+    <packaging>pom</packaging>
+    <version>${version}</version>
+
+    <properties>
+        <oss-configlint.version>1.0.6.OSS-SNAPSHOT</oss-configlint.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <tychoBuild>false</tychoBuild>
+
+                    <installProject>false</installProject>
+                    <verbose>false</verbose>
+
+                    <gitFlowConfig>
+                        <productionBranch>master</productionBranch>
+                        <developmentBranch>develop</developmentBranch>
+                        <featureBranchPrefix>feature/</featureBranchPrefix>
+                        <releaseBranchPrefix>release/</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+                        <supportBranchPrefix>support/</supportBranchPrefix>
+                        <versionTagPrefix></versionTagPrefix>
+                    </gitFlowConfig>
+
+                    <commitMessages>
+                        <featureStartMessage>updating versions for feature branch</featureStartMessage>
+                        <featureFinishMessage>updating versions for development branch</featureFinishMessage>
+
+                        <hotfixStartMessage>updating versions for hotfix</hotfixStartMessage>
+                        <hotfixFinishMessage>updating for next development version</hotfixFinishMessage>
+
+                        <releaseStartMessage>updating versions for release</releaseStartMessage>
+                        <releaseFinishMessage>updating for next development version</releaseFinishMessage>
+
+                        <tagHotfixMessage>tagging hotfix</tagHotfixMessage>
+                        <tagReleaseMessage>tagging release</tagReleaseMessage>
+                    </commitMessages>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.yirendai.infra</groupId>
+                                    <artifactId>oss-configlint</artifactId>
+                                    <version>${oss-configlint.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.basedir}/hooks</outputDirectory>
+                                    <destFileName>oss-configlint.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.basedir}/hooks</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>fix-executable-permissions</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                                <chmod file="hooks/*" perm="755"/>
+                                <chmod file="ci.sh" perm="755"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>echo-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>echo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <echos>
+                        <echo>============= Properties =============</echo>
+                        <echo>Property java.home : ${java.home}</echo>
+                        <echo>Property user.dir  : ${user.dir}</echo>
+                    </echos>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>config-validation</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <!--executable>${project.basedir}/hooks/pre-commit</executable-->
+                            <executable>${java.home}/bin/java</executable>
+                            <workingDirectory>${user.dir}</workingDirectory>
+                            <arguments>
+                                <argument>-jar</argument>
+                                <argument>${project.basedir}/hooks/oss-configlint.jar</argument>
+                                <argument>application.yml</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

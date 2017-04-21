@@ -1,0 +1,38 @@
+
+# ${artifactId}'s spring-cloud bootstrap
+
+#set( $whySetVelocityVariablesLikeThis = 'see: http://stackoverflow.com/questions/31201338/maven-archetype-velocity-error-because-of-a-colon')
+#set( $eurekaClientServiceUrlDefaultZone = '${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://user:user_pass@local-eureka:8761/eureka/}' )
+#set( $springCloudConfigDiscoveryServiceId = '${SPRING_CLOUD_CONFIG_DISCOVERY_SERVICEID:local-configserver}' )
+#set( $springCloudConfigLabel = '${SPRING_CLOUD_CONFIG_LABEL:develop}' )
+#set( $springCloudConfigProfile = '${spring.profiles.active:${ENV:development}.env}' )
+#set( $springCloudConfigUsername = '${CONFIG_SERVER_USERNAME:user}' )
+#set( $springCloudConfigPassword = '${CONFIG_SERVER_PASSWORD:user_pass}' )
+
+endpoints:
+  info:
+    sensitive: false
+
+encrypt:
+  failOnError: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: $eurekaClientServiceUrlDefaultZone
+  #instance:
+
+spring.application.name: ${artifactId}
+
+spring.cloud:
+  config:
+    enabled: true
+    discovery:
+      enabled: true
+      serviceId: $springCloudConfigDiscoveryServiceId
+    failFast: true
+    name: ${artifactId}
+    label: $springCloudConfigLabel
+    profile: $springCloudConfigProfile
+    username: $springCloudConfigUsername
+    password: $springCloudConfigPassword

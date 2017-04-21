@@ -1,0 +1,11 @@
+
+*.iml
+
+.settings
+.classpath
+.project
+/target
+/hooks/*.jar
+
+.DS_Store
+Thumbs.db
